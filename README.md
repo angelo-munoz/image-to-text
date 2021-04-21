@@ -16,3 +16,9 @@ aws s3 cp .\sample-image.png s3://angelo-itt/sample-image.png
 ```sh
 aws rekognition detect-text --image "S3Object={Bucket=photo-collection,Name=photo.jpg}"
 ```
+
+Open issues: 
+- researching JQ combine results: https://stedolan.github.io/jq/manual/
+- https://programminghistorian.org/en/lessons/json-and-jq
+- https://unix.stackexchange.com/questions/610461/how-to-merge-arrays-from-multiple-json-files-with-jq
+- https://stackoverflow.com/questions/42011086/merge-arrays-of-json
