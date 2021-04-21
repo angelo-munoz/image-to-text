@@ -14,5 +14,5 @@ aws s3 cp .\sample-image.png s3://angelo-itt/sample-image.png
 3. Install the [jq](https://stedolan.github.io/jq/) tool
 4. Run the following command using the AWS CLI to extract text to the command line
 ```sh
-aws rekognition detect-text --image "S3Object={Bucket=photo-collection,Name=photo.jpg}"
+aws rekognition detect-text --image "S3Object={Bucket=photo-collection,Name=photo.jpg}" --region us-east-1
 ```
