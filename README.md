@@ -14,6 +14,7 @@ aws s3 cp .\sample-image.png s3://angelo-itt/sample-image.png
 3. Install the [jq](https://stedolan.github.io/jq/) tool
 4. Run the following command using the AWS CLI to extract text to the command line
 ```sh
+
 aws rekognition detect-text --image "S3Object={Bucket=photo-collection,Name=photo.jpg}" | jq '.TextDetections[].DetectedText' #works! 
 #.TextDetections[] | select(.Type =="LINE").DetectedText #works in jqtester
 echo "$json" | jq '.TextDetections[].DetectedText'
@@ -343,28 +344,8 @@ Open issues:
                         "X": 0.33533382415771484,
                         "Y": 0.050314463675022125
                     },
-^C
-PS C:\Users\amunoz\Repos\image-to-text> aws rekognition detect-text --image "S3Object={Bucket=angelo-itt,Name=sample-image.png}"                           
-{
-    "TextDetections": [
-            "DetectedText": "Amazon Rekognition text detection can detect text in images and videos. It can then convert the detected text into machine-readable text.",
-            "Type": "LINE",
-            "Id": 0,
-            "Confidence": 98.95492553710938,
-            "Geometry": {
-                "BoundingBox": {
-                    "Width": 0.971509575843811,
-                    "Height": 0.0804489329457283,
-                    "Left": 0.006743445992469788,
-                    "Top": 0.04250591993331909
-                },
-                "Polygon": [
-                    {
-                        "X": 0.006743445992469788,
-                        "Y": 0.04455532506108284
-                    },
-                    {
-                        "X": 0.9782436490058899,
-                        "Y": 0.04250591993331909
-                    },
+```
+
+```
+aws rekognition detect-text --image "S3Object={Bucket=photo-collection,Name=photo.jpg}" --region us-east-1
 ```
