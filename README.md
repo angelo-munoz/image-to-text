@@ -14,12 +14,14 @@ aws s3 cp .\sample-image.png s3://angelo-itt/sample-image.png
 3. Install the [jq](https://stedolan.github.io/jq/) tool
 4. Run the following command using the AWS CLI to extract text to the command line
 ```sh
+#initialize csv file
+echo "Question,Option 1,Option 2,Option 3,Option 4,Option 5,Correct Answer,Time,Image Link" > output.csv
 
 #Windows: escape the double quote in a windows powershell terminal (VSCode)
-aws rekognition detect-text --image "S3Object={Bucket=photo-collection,Name=photo.jpg}" | jq '.TextDetections | map(select(.Type ==\"LINE\").DetectedText) | join(\" \")'
+aws rekognition detect-text --image "S3Object={Bucket=photo-collection,Name=photo.jpg}" | jq '.TextDetections | map(select(.Type ==\"LINE\").DetectedText) | join(\" \")' >> output.csv
 
 #unix: no escape needed
-aws rekognition detect-text --image "S3Object={Bucket=photo-collection,Name=photo.jpg}" | jq '.TextDetections | map(select(.Type =="LINE").DetectedText) | join(" ")'
+aws rekognition detect-text --image "S3Object={Bucket=photo-collection,Name=photo.jpg}" | jq '.TextDetections | map(select(.Type =="LINE").DetectedText) | join(" ")' >> output.csv
 
 ```
 
