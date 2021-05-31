@@ -1,60 +1,62 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
-Description: Image resizing service
+Description: Image to text service. Extract text from images. 
+#process: admin will upload images to an S3 bucket, which will fire a lambda (python), which will...
+# call the rekognition service for the given image
+# and save the line contents to a dynadbo table
+# on processing the final image, will notify an operator (nice to have)
 
-Parameters:
-  SourceBucketName:
-    Type: String
-  DestinationBucketName:
-    Type: String
+Globals:
+  Function: 
+    Runtime: python3.8
+    Timeout: 3 #seconds
+    Tags:
+      workload: image-to-text
+      owner: amunoz
+    Environment:
+      Variables:
+        TABLE_NAME: !Ref TextTable
+    
 
 Resources:
   ## S3 bucket
-  SourceBucket:
+  ImageBucket:
     Type: AWS::S3::Bucket
-    Properties:
-      BucketName: !Ref SourceBucketName    
-  DestinationBucket:
-    Type: AWS::S3::Bucket
-    Properties:
-      BucketName: !Ref DestinationBucketName   
 
   ## Lambda function
-  ResizerFunction:
+  TextExtractorFunction:
     Type: AWS::Serverless::Function 
     Properties:
       CodeUri: src/
       Handler: app.handler
-      Runtime: nodejs12.x
-      MemorySize: 2048
-      Layers:
-        - !Sub 'arn:aws:lambda:${AWS::Region}:175033217214:layer:graphicsmagick:2'
-      Policies:
-        - S3ReadPolicy:
-            BucketName: !Ref SourceBucketName
-        - S3CrudPolicy:
-            BucketName: !Ref DestinationBucketName
-      Environment:
-        Variables:
-          DESTINATION_BUCKETNAME: !Ref DestinationBucketName              
+      Policies: AdministratorAccess
+      # - S3ReadPolicy:
+      #     BucketName: !Ref ImageBucket
+      # - DynamoDBReadPolicy:
+      #     TableName: !Ref TextTable
+      # - DynamoDBWritePolicy:
+      #     TableName: !Ref TextTable
+      # - AWSLambdaExecute
       Events:
         FileUpload:
           Type: S3
           Properties:
-            Bucket: !Ref SourceBucket
+            Bucket: !Ref ImageBucket
             Events: s3:ObjectCreated:*
-            Filter: 
-              S3Key:
-                Rules:
-                  - Name: suffix
-                    Value: '.jpg'     
-Outputs:
-  SourceBucketName:
-    Value: !Ref SourceBucketName
-    Description: S3 Bucket for object storage
-  DestinationBucketName:
-    Value: !Ref DestinationBucketName
-    Description: S3 destination Bucket for object storage
-  FunctionArn:
-    Value: !Ref ResizerFunction
-    Description: ResizerFunction function  Arn
+  TextTable:
+    Type: AWS::Serverless::SimpleTable
+    Properties:
+      Tags:
+        workload: image-to-text
+        owner: amunoz
+              
+# Outputs:
+#   SourceBucketName:
+#     Value: !Ref SourceBucketName
+#     Description: S3 Bucket for object storage
+#   DestinationBucketName:
+#     Value: !Ref DestinationBucketName
+#     Description: S3 destination Bucket for object storage
+#   FunctionArn:
+#     Value: !Ref ResizerFunction
+#     Description: ResizerFunction function  Arn
