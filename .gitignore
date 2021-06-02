@@ -30,3 +30,7 @@
 *.exe
 *.out
 *.app
+
+#sam
+.aws-sam
+*.toml
