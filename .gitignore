@@ -34,3 +34,4 @@
 #sam
 .aws-sam
 *.toml
+package
