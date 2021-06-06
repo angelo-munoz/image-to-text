@@ -5,7 +5,7 @@ There is also an alternate solution using the AWS CLI and JQ. See the [CLI-versi
 
 ## Process
 - option 1: end user upload images to s3 > s3 lambda trigger > call rekognition for each image > store text in ddb > compile into csv > notify requester
-- option 2: on each lambda, get s3 item count, on the last one, notify downstream to compile all into one doc. 
+- option 2: on each lambda, get s3 item count, on the last one, notify downstream to compile all into one doc. Do we remove file or move to a subfolder to ensure an accurate count?
 
 
 ## Open issues
