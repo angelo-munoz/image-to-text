@@ -35,3 +35,5 @@
 .aws-sam
 *.toml
 package
+package2
+*.zip
