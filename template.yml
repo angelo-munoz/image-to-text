@@ -15,8 +15,7 @@ Globals:
       owner: amunoz
     Environment:
       Variables:
-        TABLE_NAME: !Ref TextTable
-    
+        TABLE_NAME: !Ref TextTable    
 
 Resources:
   ## S3 bucket
@@ -43,6 +42,9 @@ Resources:
           Properties:
             Bucket: !Ref ImageBucket
             Events: s3:ObjectCreated:*
+      # Environment:
+      #   Variables:
+      #     IMAGEBUCKETNAME: !Ref ImageBucket
   TextTable:
     Type: AWS::Serverless::SimpleTable
     Properties:
@@ -50,13 +52,13 @@ Resources:
         workload: image-to-text
         owner: amunoz
               
-# Outputs:
-#   SourceBucketName:
-#     Value: !Ref SourceBucketName
-#     Description: S3 Bucket for object storage
-#   DestinationBucketName:
-#     Value: !Ref DestinationBucketName
-#     Description: S3 destination Bucket for object storage
-#   FunctionArn:
-#     Value: !Ref ResizerFunction
-#     Description: ResizerFunction function  Arn
+Outputs:
+  ImageBucketName:
+    Value: !Sub "aws s3 cp ./images/sample-image.png s3://${ImageBucket}/sample-image.png"
+    Description: Sample command to push an image to the Images S3 bucket 
+  FunctionArn:
+    Value: !Sub "sam logs -n TextExtractorFunction --stack-name ${AWS::StackName} --tail"
+    Description: Sample command to get function's log
+  TableArn:
+    Value: !Ref TextTable
+    Description: DynamoDB table name
