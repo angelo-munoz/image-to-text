@@ -1,5 +1,5 @@
 ﻿# Image to Text using Amazon Rekognition
-Serverless application using [AWS Rekognition](https://aws.amazon.com/rekognition/) to extract text from images in an S3 bucket and saving them in a [DynamoDB](https://aws.amazon.com/dynamodb) database. The text is later compiled into a single CSV file. 
+Serverless application using [AWS Rekognition](https://aws.amazon.com/rekognition/) to extract text from images in an [S3](https://aws.amazon.com/s3/) bucket and saving them in a [DynamoDB](https://aws.amazon.com/dynamodb) database. The text is later compiled into a single CSV file. 
 Considering adding terraform to the solution. 
 There is also an alternate solution using the AWS CLI and JQ. See the [CLI-version](CLI-version/readme.md) for that solution. 
 
