@@ -3,7 +3,7 @@ Serverless application using [AWS Rekognition](https://aws.amazon.com/rekognitio
 Considering adding [terraform](https://www.terraform.io/) to the solution. 
 There is also an alternate solution using the [AWS CLI](https://aws.amazon.com/cli/) and [JQ](https://stedolan.github.io/jq/). See the [CLI-version](CLI-version/readme.md) for that solution. 
 
-Update: due to the 100 character extraction limit in Rekognition, I'll switch to another solution, perhaps an OCR API. 
+Update: due to the 100 character extraction limit in Rekognition, I'll switch to another solution, perhaps an OCR API like [OCR space](https://ocr.space/ocrapi).
 ## Process
 - option 1: end user upload images to s3 > s3 lambda trigger > call rekognition for each image > store text in ddb > compile into csv > notify requester
 - option 2: on each lambda, get s3 item count, on the last one, notify downstream to compile all into one doc. Do we remove file or move to a subfolder to ensure an accurate count?
