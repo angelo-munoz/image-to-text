@@ -8,6 +8,11 @@ Update: due to the 100 character extraction limit in Rekognition, I'll switch to
 - option 1: end user upload images to s3 > s3 lambda trigger > call rekognition for each image > store text in ddb > compile into csv > notify requester
 - option 2: on each lambda, get s3 item count, on the last one, notify downstream to compile all into one doc. Do we remove file or move to a subfolder to ensure an accurate count?
 
+## OCR sample commend
+```sh
+curl -H "apikey:helloworld" -F "file=@images/abcya.png" https://api.ocr.space/parse/image
+```
+
 
 ## Open issues
 - how to combine all text into csv. table scan save

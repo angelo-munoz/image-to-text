@@ -59,7 +59,7 @@ def handler(event, context):
         response=rekognition.detect_text(Image={'S3Object':{'Bucket':bucket,'Name':key}})
                         
         textDetections=response['TextDetections']
-        print ('Detected text\n----------')
+        #print ('Detected text\n----------')
         detectedText = ""
         for text in textDetections:
             if text['Type']=="LINE":
