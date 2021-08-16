@@ -37,3 +37,8 @@
 package
 package2
 *.zip
+
+*.png
+*.jpg
+*.txt
+.vscode
