@@ -10,7 +10,11 @@ Update: due to the 100 character extraction limit in Rekognition, I'll switch to
 
 ## OCR sample commend
 ```sh
-curl -H "apikey:helloworld" -F "file=@images/abcya.png" https://api.ocr.space/parse/image
+#convert image to text
+curl -H "apikey:helloworld" -F "file=@images/abcya.png" -F "OCREngine=2" https://api.ocr.space/parse/image
+
+#convert, parse w JQ and send to text file output
+curl -H "apikey:helloworld" -F "file=@images/scans/abcya.png" -F "OCREngine=2" https://api.ocr.space/parse/image | jq .ParsedResults[0].ParsedText >> extractedText.txt
 ```
 
 
